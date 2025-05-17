@@ -1,0 +1,57 @@
+Aplicação de Gestão de SEO:
+
+1. Título do Projeto: "Criação de Aplicação Web Completa para Gestão de Projetos de SEO (SeoGestorPro)"
+
+2. Objetivo Principal: "Desenvolver uma aplicação web robusta e intuitiva para gestores de SEO gerenciarem seus projetos, clientes, tarefas e relatórios de forma eficiente. A aplicação deve ser funcional para desenvolvimento local no Windows 11 e otimizada para deploy online em plataformas como Netlify ou Vercel."
+
+3. Público-Alvo: "Profissionais de SEO, agências de marketing digital e freelancers que necessitam de uma ferramenta centralizada para organizar e acompanhar o progresso de múltiplos projetos de otimização para motores de busca."
+
+4. Funcionalidades Chave Detalhadas:
+
+- Módulo de Autenticação e Usuários:
+  - Registro e login de usuários.
+  - Perfis de usuário (ex: administrador, gestor).
+  - Recuperação de senha.
+- Módulo de Gerenciamento de Clientes:
+  - CRUD (Criar, Ler, Atualizar, Deletar) para clientes.
+  - Associação de projetos a clientes.
+- Módulo de Gerenciamento de Projetos SEO:
+  - CRUD para projetos.
+  - Campos detalhados: nome do projeto, website, cliente associado, datas de início/fim, status (ex: em andamento, concluído, pausado).
+  - Possibilidade de anexar arquivos ou links relevantes.
+- Módulo de Gerenciamento de Tarefas:
+  - CRUD para tarefas dentro de cada projeto.
+  - Atribuição de responsáveis, prazos, prioridades e status (ex: pendente, em progresso, concluída).
+  - Visualização de tarefas em formato de lista ou kanban (opcional).
+- Módulo de Relatórios:
+  - Geração de relatórios em PDF para projetos específicos, incluindo informações do projeto, progresso das tarefas e métricas chave (se aplicável).
+  - Customização básica do layout do relatório.
+- Dashboard Principal:
+  - Visão geral dos projetos ativos, tarefas pendentes e próximas do prazo.
+  - Gráficos simples de progresso (opcional).
+5. Stack Tecnológica (Full-Stack):
+
+
+- Desenvolvimento Local:
+  - Totalmente funcional no Windows 11.
+- Deploy Online (Pronto para):
+  - Estrutura de projeto compatível com deploy em plataformas como Netlify (preferencialmente) ou Vercel.
+7. Qualidade e Estrutura do Código:
+
+- Código modular e bem organizado (separação clara de responsabilidades: UI components, services, server routes, database logic, etc.).
+- Comentários explicativos para lógica complexa.
+- Tratamento de erros robusto tanto no frontend quanto no backend.
+- Código limpo e legível.
+8. Entregáveis Esperados:
+
+- Arquivo README.md detalhado com:
+  - Instruções de setup do ambiente de desenvolvimento (pré-requisitos, instalação de dependências).
+  - Como rodar a aplicação localmente.
+  - Como executar os scripts de build.
+  - Instruções claras para deploy online (incluindo configuração de variáveis de ambiente).
+
+9. Considerações Adicionais (Opcional):
+
+- "Implementar testes unitários básicos para as principais funcionalidades do backend."
+- "Interface responsiva para boa visualização em desktops e tablets."
+- "Considerar performance na manipulação de listas grandes de projetos/tarefas."
