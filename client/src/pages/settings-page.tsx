@@ -75,21 +75,26 @@ export default function SettingsPage() {
                 
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label>Language</Label>
+                    <Label htmlFor="language-select">Language</Label>
                     <div className="text-sm text-muted-foreground">
                       Choose your preferred language
                     </div>
                   </div>
-                  <select className="border rounded p-2">
+                  <select 
+                    id="language-select"
+                    className="border rounded p-2 bg-background text-foreground"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                  >
                     <option value="en">English</option>
-                    <option value="es">Spanish</option>
-                    <option value="fr">French</option>
-                    <option value="pt">Portuguese</option>
-                    <option value="de">German</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="pt">Português</option>
+                    <option value="de">Deutsch</option>
                   </select>
                 </div>
                 
-                <Button>Save Changes</Button>
+                <Button onClick={saveGeneralSettings}>Save Changes</Button>
               </CardContent>
             </Card>
           </TabsContent>

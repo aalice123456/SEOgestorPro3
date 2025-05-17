@@ -65,7 +65,22 @@ export function ProjectForm({ project, onClose }: ProjectFormProps) {
   // Create project mutation
   const createProjectMutation = useMutation({
     mutationFn: async (data: ProjectFormValues) => {
-      const response = await apiRequest("POST", "/api/projects", data);
+      // Prepare the data with properly formatted dates
+      const formattedData = {
+        ...data,
+        // Format dates as ISO strings for API compatibility
+        startDate: data.startDate.toISOString(),
+        endDate: data.endDate ? data.endDate.toISOString() : undefined,
+      };
+      
+      console.log("Submitting project data:", formattedData);
+      const response = await apiRequest("POST", "/api/projects", formattedData);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to create project");
+      }
+      
       return response.json();
     },
     onSuccess: () => {
@@ -90,7 +105,22 @@ export function ProjectForm({ project, onClose }: ProjectFormProps) {
   // Update project mutation
   const updateProjectMutation = useMutation({
     mutationFn: async (data: ProjectFormValues) => {
-      const response = await apiRequest("PUT", `/api/projects/${project?.id}`, data);
+      // Prepare the data with properly formatted dates
+      const formattedData = {
+        ...data,
+        // Format dates as ISO strings for API compatibility
+        startDate: data.startDate.toISOString(),
+        endDate: data.endDate ? data.endDate.toISOString() : undefined,
+      };
+      
+      console.log("Updating project data:", formattedData);
+      const response = await apiRequest("PUT", `/api/projects/${project?.id}`, formattedData);
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update project");
+      }
+      
       return response.json();
     },
     onSuccess: () => {
