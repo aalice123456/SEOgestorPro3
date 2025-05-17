@@ -71,58 +71,65 @@ export function Sidebar({ isMobile = false, onClose }: SidebarProps) {
           Main
         </div>
 
-        <Link href="/">
-          <a className={linkClass("/")} onClick={isMobile ? onClose : undefined}>
-            <BarChart2 className="w-5 mr-3" />
-            <span>Dashboard</span>
-          </a>
-        </Link>
+        <div className={linkClass("/")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/";
+          }}>
+          <BarChart2 className="w-5 mr-3" />
+          <span>Dashboard</span>
+        </div>
 
-        <Link href="/clients">
-          <a className={linkClass("/clients")} onClick={isMobile ? onClose : undefined}>
-            <Users className="w-5 mr-3" />
-            <span>Clients</span>
-          </a>
-        </Link>
+        <div className={linkClass("/clients")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/clients";
+          }}>
+          <Users className="w-5 mr-3" />
+          <span>Clients</span>
+        </div>
 
-        <Link href="/projects">
-          <a className={linkClass("/projects")} onClick={isMobile ? onClose : undefined}>
-            <FolderKanban className="w-5 mr-3" />
-            <span>Projects</span>
-          </a>
-        </Link>
+        <div className={linkClass("/projects")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/projects";
+          }}>
+          <FolderKanban className="w-5 mr-3" />
+          <span>Projects</span>
+        </div>
 
-        <Link href="/tasks">
-          <a className={linkClass("/tasks")} onClick={isMobile ? onClose : undefined}>
-            <CheckSquare className="w-5 mr-3" />
-            <span>Tasks</span>
-          </a>
-        </Link>
+        <div className={linkClass("/tasks")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/tasks";
+          }}>
+          <CheckSquare className="w-5 mr-3" />
+          <span>Tasks</span>
+        </div>
 
-        <Link href="/reports">
-          <a className={linkClass("/reports")} onClick={isMobile ? onClose : undefined}>
-            <FileText className="w-5 mr-3" />
-            <span>Reports</span>
-          </a>
-        </Link>
+        <div className={linkClass("/reports")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/reports";
+          }}>
+          <FileText className="w-5 mr-3" />
+          <span>Reports</span>
+        </div>
 
         <div className="px-4 py-2 mt-4 text-gray-400 text-xs font-semibold uppercase">
           Settings
         </div>
 
-        <Link href="/profile">
-          <a className={linkClass("/profile")} onClick={isMobile ? onClose : undefined}>
-            <UserCircle className="w-5 mr-3" />
-            <span>My Profile</span>
-          </a>
-        </Link>
+        <div className={linkClass("/profile")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/profile";
+          }}>
+          <UserCircle className="w-5 mr-3" />
+          <span>My Profile</span>
+        </div>
 
-        <Link href="/settings">
-          <a className={linkClass("/settings")} onClick={isMobile ? onClose : undefined}>
-            <Settings className="w-5 mr-3" />
-            <span>Settings</span>
-          </a>
-        </Link>
+        <div className={linkClass("/settings")} onClick={() => {
+            if (isMobile && onClose) onClose();
+            window.location.href = "/settings";
+          }}>
+          <Settings className="w-5 mr-3" />
+          <span>Settings</span>
+        </div>
       </div>
 
       <div className="mt-auto p-4 border-t border-gray-700">
