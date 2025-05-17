@@ -1,4 +1,4 @@
-import { useLocation, Link } from "wouter";
+import { useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
 import {
   BarChart2,
@@ -9,7 +9,10 @@ import {
   UserCircle,
   Settings,
   LogOut,
+  X,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface SidebarProps {
   isMobile?: boolean;
@@ -17,7 +20,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isMobile = false, onClose }: SidebarProps) {
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
   const { logoutMutation } = useAuth();
 
   const handleLogout = () => {
@@ -28,118 +31,72 @@ export function Sidebar({ isMobile = false, onClose }: SidebarProps) {
     return location === path;
   };
 
-  const linkClass = (path: string) => {
-    return `flex items-center px-4 py-3 ${
-      isActive(path)
-        ? "text-gray-100 bg-gray-700"
-        : "text-gray-300 hover:bg-gray-700 transition-colors"
-    }`;
+  const navigateTo = (path: string) => {
+    if (isMobile && onClose) onClose();
+    setLocation(path);
   };
 
+  const NavItem = ({ path, icon, label }: { path: string; icon: React.ReactNode; label: string }) => (
+    <Button
+      variant="ghost"
+      className={cn(
+        "w-full justify-start gap-3 font-normal",
+        isActive(path) ? "bg-primary/20 text-primary" : "hover:bg-muted"
+      )}
+      onClick={() => navigateTo(path)}
+    >
+      {icon}
+      <span>{label}</span>
+    </Button>
+  );
+
   return (
-    <aside className="bg-gray-800 text-white w-64 flex-shrink-0 h-full flex flex-col">
-      <div className="p-4 flex items-center border-b border-gray-700">
+    <aside className="bg-card/50 text-card-foreground w-64 flex-shrink-0 h-full flex flex-col border-r">
+      <div className="p-4 flex items-center border-b">
         {isMobile && (
-          <button
+          <Button 
+            variant="ghost" 
+            size="icon" 
             onClick={onClose}
-            className="text-gray-400 hover:text-white mr-2"
+            className="mr-2"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          </button>
+            <X className="h-4 w-4" />
+          </Button>
         )}
-        <div className="bg-blue-500 text-white p-2 rounded-lg mr-2">
+        <div className="bg-gradient-to-r from-primary to-blue-600 text-white p-2 rounded-lg mr-2">
           <BarChart2 size={20} />
         </div>
         <h1 className="text-xl font-bold">SeoGestorPro</h1>
       </div>
 
-      <div className="py-4 flex-1 overflow-y-auto">
-        <div className="px-4 py-2 text-gray-400 text-xs font-semibold uppercase">
+      <div className="py-4 flex-1 overflow-y-auto space-y-1 px-3">
+        <div className="text-xs font-semibold text-muted-foreground px-4 pt-2 pb-1 uppercase">
           Main
         </div>
 
-        <div className={linkClass("/")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/";
-          }}>
-          <BarChart2 className="w-5 mr-3" />
-          <span>Dashboard</span>
-        </div>
+        <NavItem path="/" icon={<BarChart2 className="h-5 w-5" />} label="Dashboard" />
+        <NavItem path="/clients" icon={<Users className="h-5 w-5" />} label="Clients" />
+        <NavItem path="/projects" icon={<FolderKanban className="h-5 w-5" />} label="Projects" />
+        <NavItem path="/tasks" icon={<CheckSquare className="h-5 w-5" />} label="Tasks" />
+        <NavItem path="/reports" icon={<FileText className="h-5 w-5" />} label="Reports" />
 
-        <div className={linkClass("/clients")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/clients";
-          }}>
-          <Users className="w-5 mr-3" />
-          <span>Clients</span>
-        </div>
-
-        <div className={linkClass("/projects")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/projects";
-          }}>
-          <FolderKanban className="w-5 mr-3" />
-          <span>Projects</span>
-        </div>
-
-        <div className={linkClass("/tasks")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/tasks";
-          }}>
-          <CheckSquare className="w-5 mr-3" />
-          <span>Tasks</span>
-        </div>
-
-        <div className={linkClass("/reports")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/reports";
-          }}>
-          <FileText className="w-5 mr-3" />
-          <span>Reports</span>
-        </div>
-
-        <div className="px-4 py-2 mt-4 text-gray-400 text-xs font-semibold uppercase">
+        <div className="text-xs font-semibold text-muted-foreground px-4 pt-4 pb-1 uppercase">
           Settings
         </div>
 
-        <div className={linkClass("/profile")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/profile";
-          }}>
-          <UserCircle className="w-5 mr-3" />
-          <span>My Profile</span>
-        </div>
-
-        <div className={linkClass("/settings")} onClick={() => {
-            if (isMobile && onClose) onClose();
-            window.location.href = "/settings";
-          }}>
-          <Settings className="w-5 mr-3" />
-          <span>Settings</span>
-        </div>
+        <NavItem path="/profile" icon={<UserCircle className="h-5 w-5" />} label="My Profile" />
+        <NavItem path="/settings" icon={<Settings className="h-5 w-5" />} label="Settings" />
       </div>
 
-      <div className="mt-auto p-4 border-t border-gray-700">
-        <button
+      <div className="mt-auto p-4 border-t">
+        <Button
+          variant="ghost" 
+          className="w-full justify-start gap-3 text-red-600 hover:bg-red-100 hover:text-red-700 dark:hover:bg-red-900/20"
           onClick={handleLogout}
-          className="flex items-center text-gray-300 hover:text-white"
         >
-          <LogOut className="mr-3" />
+          <LogOut className="h-5 w-5" />
           <span>Logout</span>
-        </button>
+        </Button>
       </div>
     </aside>
   );
