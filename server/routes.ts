@@ -644,7 +644,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         upcomingDeadlines: userUpcomingTasks
       });
     } catch (error) {
-      console.error("Dashboard error:", error);
+      console.error("Dashboard error:", error instanceof Error ? error.message : error);
+      console.error("Dashboard error stack:", error instanceof Error ? error.stack : "No stack trace");
       res.status(500).json({ message: "Failed to fetch dashboard stats" });
     }
   });

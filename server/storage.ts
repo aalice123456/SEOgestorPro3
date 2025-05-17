@@ -7,8 +7,8 @@ import {
   type Report, type InsertReport,
   type ActivityLog, type InsertActivityLog
 } from "@shared/schema";
-import { db } from "./db";
-import { eq, and, desc, lt, gt, gte, lte, isNull } from "drizzle-orm";
+import { db, count, pool } from "./db";
+import { eq, and, desc, lt, gt, gte, lte, isNull, sql } from "drizzle-orm";
 import session from "express-session";
 import connectPg from "connect-pg-simple";
 
@@ -74,15 +74,15 @@ export interface IStorage {
   getProjectStats(userId: number): Promise<any>;
   getTaskProgressStats(userId: number): Promise<any>;
 
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 }
 
 export class DatabaseStorage implements IStorage {
-  sessionStore: session.SessionStore;
+  sessionStore: any;
 
   constructor() {
     this.sessionStore = new PostgresSessionStore({
-      pool: db.driver, 
+      pool: pool, 
       createTableIfMissing: true
     });
   }
@@ -378,7 +378,7 @@ export class DatabaseStorage implements IStorage {
   // Dashboard stats methods
   async getActiveProjectsCount(userId: number): Promise<number> {
     const result = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(projects)
       .where(
         and(
@@ -391,7 +391,7 @@ export class DatabaseStorage implements IStorage {
 
   async getCompletedProjectsCount(userId: number): Promise<number> {
     const result = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(projects)
       .where(
         and(
@@ -404,7 +404,7 @@ export class DatabaseStorage implements IStorage {
 
   async getPendingTasksCount(userId: number): Promise<number> {
     const result = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(tasks)
       .where(
         and(
@@ -417,7 +417,7 @@ export class DatabaseStorage implements IStorage {
 
   async getActiveClientsCount(userId: number): Promise<number> {
     const result = await db
-      .select({ count: db.sql`count(distinct ${clients.id})` })
+      .select({ count: sql`count(distinct ${clients.id})::int` })
       .from(clients)
       .innerJoin(projects, eq(clients.id, projects.clientId))
       .where(
@@ -443,7 +443,7 @@ export class DatabaseStorage implements IStorage {
 
   async getTaskProgressStats(userId: number): Promise<any> {
     const completedTasks = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(tasks)
       .where(
         and(
@@ -453,7 +453,7 @@ export class DatabaseStorage implements IStorage {
       );
     
     const inProgressTasks = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(tasks)
       .where(
         and(
@@ -463,7 +463,7 @@ export class DatabaseStorage implements IStorage {
       );
     
     const pendingTasks = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(tasks)
       .where(
         and(
@@ -474,7 +474,7 @@ export class DatabaseStorage implements IStorage {
 
     const today = new Date();
     const overdueTasks = await db
-      .select({ count: db.sql`count(*)` })
+      .select({ count: sql`count(*)::int` })
       .from(tasks)
       .where(
         and(
