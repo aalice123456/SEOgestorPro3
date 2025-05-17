@@ -1,0 +1,38 @@
+/* Fix for select dropdown text color in dark mode */
+.dark select option {
+  background-color: hsl(222.2, 84%, 4.9%);
+  color: white;
+}
+
+/* Fix for select fields in dark mode */
+.dark .select-value {
+  color: white;
+}
+
+/* Fix for datepicker text in dark mode */
+.dark .rdp {
+  --rdp-accent-color: hsl(221.2, 83.2%, 53.3%);
+  --rdp-background-color: hsl(222.2, 84%, 4.9%);
+  --rdp-accent-color-dark: hsl(221.2, 83.2%, 53.3%);
+  --rdp-background-color-dark: hsl(222.2, 84%, 4.9%);
+  --rdp-outline: 2px solid var(--rdp-accent-color);
+  --rdp-outline-selected: 2px solid var(--rdp-accent-color);
+  color: white;
+}
+
+.dark .rdp-caption,
+.dark .rdp-head_cell,
+.dark .rdp-day {
+  color: white;
+}
+
+.dark .rdp-day_selected, 
+.dark .rdp-day_selected:focus-visible, 
+.dark .rdp-day_selected:hover {
+  background-color: var(--rdp-accent-color);
+  color: white;
+}
+
+.dark .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: hsl(217.2, 32.6%, 17.5%);
+}

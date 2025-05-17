@@ -209,9 +209,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     if (!req.isAuthenticated()) return res.status(401).json({ message: "Unauthorized" });
     
     try {
-      const parsedData = insertProjectSchema.safeParse({ ...req.body, createdBy: req.user.id });
+      console.log("Project create request:", req.body);
+      
+      // Process dates correctly
+      let projectData = { ...req.body, createdBy: req.user.id };
+      
+      // Make sure startDate is in proper format
+      if (typeof projectData.startDate === 'string') {
+        projectData.startDate = new Date(projectData.startDate);
+      }
+      
+      // Make sure endDate is in proper format if it exists
+      if (projectData.endDate && typeof projectData.endDate === 'string') {
+        projectData.endDate = new Date(projectData.endDate);
+      }
+      
+      const parsedData = insertProjectSchema.safeParse(projectData);
       
       if (!parsedData.success) {
+        console.error("Project validation error:", parsedData.error.errors);
         return res.status(400).json({ message: "Invalid project data", errors: parsedData.error.errors });
       }
       
@@ -234,6 +250,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.status(201).json(newProject);
     } catch (error) {
+      console.error("Failed to create project:", error);
       res.status(500).json({ message: "Failed to create project" });
     }
   });

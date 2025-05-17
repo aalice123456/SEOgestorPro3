@@ -18,11 +18,21 @@ export default function SettingsPage() {
   const [projectUpdates, setProjectUpdates] = useState(true);
   const [taskReminders, setTaskReminders] = useState(true);
   const [clientMessages, setClientMessages] = useState(true);
+  const [language, setLanguage] = useState("en");
 
   const saveNotificationSettings = () => {
     toast({
       title: "Settings updated",
       description: "Your notification settings have been saved.",
+    });
+  };
+
+  const saveGeneralSettings = () => {
+    // Here we would normally send the language preference to the server
+    localStorage.setItem("app_language", language);
+    toast({
+      title: "Settings updated",
+      description: "Your general settings have been saved.",
     });
   };
 
