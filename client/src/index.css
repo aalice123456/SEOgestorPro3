@@ -70,6 +70,26 @@
     color: var(--popover-foreground);
   }
 
+  /* Fix for language selector in dark mode */
+  .dark select option:checked,
+  .dark select option:hover,
+  .dark select option:focus {
+    background-color: hsl(221.2, 83.2%, 53.3%);
+    color: white;
+  }
+
+  /* Ensure language dropdown is readable when highlighted */
+  .dark select option:hover {
+    background-color: hsl(217.2, 32.6%, 25.5%);
+  }
+
+  /* Fix for the selected option highlight */
+  .dark select:focus option:checked {
+    box-shadow: 0 0 10px 100px hsl(221.2, 83.2%, 53.3%) inset;
+    background-color: hsl(221.2, 83.2%, 53.3%);
+    color: white;
+  }
+
   .dark .react-datepicker__input-container input,
   .dark .react-datepicker {
     color: var(--foreground);
