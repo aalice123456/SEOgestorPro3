@@ -577,6 +577,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = req.user.id;
       
+      // If there's no data yet, return default empty stats
+      const projects = await storage.getProjectsByUserId(userId);
+      if (projects.length === 0) {
+        return res.json({
+          stats: {
+            activeProjects: 0,
+            completedProjects: 0,
+            pendingTasks: 0,
+            activeClients: 0
+          },
+          taskProgress: {
+            completed: 0,
+            inProgress: 0,
+            pending: 0,
+            overdue: 0,
+            total: 0,
+            completedPercentage: 0,
+            inProgressPercentage: 0,
+            pendingPercentage: 0
+          },
+          recentActivities: [],
+          recentClients: [],
+          upcomingDeadlines: []
+        });
+      }
+      
+      // Get dashboard stats
       const activeProjects = await storage.getActiveProjectsCount(userId);
       const completedProjects = await storage.getCompletedProjectsCount(userId);
       const pendingTasks = await storage.getPendingTasksCount(userId);
@@ -586,7 +613,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get recent activities
       const recentActivities = await storage.getActivityLogsByUserId(userId, 5);
       
-      // Get recent clients (could be optimized in a real app)
+      // Get recent clients
       const allClients = await storage.getClientsByUserId(userId);
       const recentClients = allClients.sort((a, b) => 
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -594,13 +621,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Get upcoming deadlines
       const upcomingTasks = await storage.getUpcomingTasks(7);
-      const projects = await storage.getProjectsByUserId(userId);
       const projectIds = new Set(projects.map(p => p.id));
       const userUpcomingTasks = upcomingTasks
         .filter(task => projectIds.has(task.projectId))
-        .sort((a, b) => 
-          new Date(a.dueDate as Date).getTime() - new Date(b.dueDate as Date).getTime()
-        )
+        .sort((a, b) => {
+          const dateA = a.dueDate ? new Date(a.dueDate).getTime() : Infinity;
+          const dateB = b.dueDate ? new Date(b.dueDate).getTime() : Infinity;
+          return dateA - dateB;
+        })
         .slice(0, 5);
       
       res.json({
@@ -616,6 +644,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         upcomingDeadlines: userUpcomingTasks
       });
     } catch (error) {
+      console.error("Dashboard error:", error);
       res.status(500).json({ message: "Failed to fetch dashboard stats" });
     }
   });
