@@ -27,6 +27,12 @@
   color: white;
 }
 
+/* Fix for language selector in dark mode */
+.dark select option:checked {
+  background-color: hsl(221.2, 83.2%, 53.3%);
+  color: white;
+}
+
 /* Fix for card backgrounds in dark mode */
 .dark .bg-white {
   background-color: hsl(222.2, 84%, 4.9%);

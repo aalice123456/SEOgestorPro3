@@ -156,7 +156,7 @@ export default function ProjectsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProjects.map((project) => (
           <Card key={project.id} className="overflow-hidden">
-            <CardHeader className="bg-gray-50 pb-4">
+            <CardHeader className="bg-secondary/50 pb-4">
               <div className="flex justify-between">
                 <CardTitle className="truncate">{project.name}</CardTitle>
                 <div className="flex space-x-1">
@@ -164,29 +164,29 @@ export default function ProjectsPage() {
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button variant="ghost" size="icon" onClick={() => handleDeleteProject(project)}>
-                    <Trash2 className="h-4 w-4" />
+                    <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
                 </div>
               </div>
               <CardDescription className="flex items-center mt-1">
-                <BarChart3 className="h-3.5 w-3.5 mr-1 text-gray-500" />
+                <BarChart3 className="h-3.5 w-3.5 mr-1 text-muted-foreground" />
                 {getClientName(project.clientId)}
               </CardDescription>
             </CardHeader>
             <CardContent className="pt-4">
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <Globe className="h-4 w-4 mr-2 mt-0.5 text-gray-500" />
+                  <Globe className="h-4 w-4 mr-2 mt-0.5 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">Website</p>
-                    <p className="text-sm text-gray-500 break-all">{project.website}</p>
+                    <p className="text-sm text-muted-foreground break-all">{project.website}</p>
                   </div>
                 </div>
                 <div className="flex items-start">
-                  <CalendarRange className="h-4 w-4 mr-2 mt-0.5 text-gray-500" />
+                  <CalendarRange className="h-4 w-4 mr-2 mt-0.5 text-muted-foreground" />
                   <div>
                     <p className="text-sm font-medium">Timeline</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-muted-foreground">
                       {format(new Date(project.startDate), 'MMM dd, yyyy')} 
                       {project.endDate && ` - ${format(new Date(project.endDate), 'MMM dd, yyyy')}`}
                     </p>
@@ -194,25 +194,25 @@ export default function ProjectsPage() {
                 </div>
                 {project.description && (
                   <div className="flex items-start">
-                    <AlignLeft className="h-4 w-4 mr-2 mt-0.5 text-gray-500" />
+                    <AlignLeft className="h-4 w-4 mr-2 mt-0.5 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Description</p>
-                      <p className="text-sm text-gray-500 line-clamp-2">{project.description}</p>
+                      <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>
                     </div>
                   </div>
                 )}
                 {project.attachments && project.attachments.length > 0 && (
                   <div className="flex items-start">
-                    <Link2 className="h-4 w-4 mr-2 mt-0.5 text-gray-500" />
+                    <Link2 className="h-4 w-4 mr-2 mt-0.5 text-muted-foreground" />
                     <div>
                       <p className="text-sm font-medium">Attachments</p>
-                      <p className="text-sm text-gray-500">{project.attachments.length} file(s)</p>
+                      <p className="text-sm text-muted-foreground">{project.attachments.length} file(s)</p>
                     </div>
                   </div>
                 )}
               </div>
             </CardContent>
-            <CardFooter className="bg-gray-50 py-2 px-6 flex justify-between items-center">
+            <CardFooter className="bg-secondary/50 py-2 px-6 flex justify-between items-center">
               <div className="flex items-center">
                 {getStatusIcon(project.status)}
                 <span className="ml-2 text-sm font-medium">Status:</span>
@@ -230,10 +230,10 @@ export default function ProjectsPage() {
       <div className="py-6 px-6">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-semibold text-gray-800">Projects</h1>
-            <p className="text-sm text-gray-500">Manage your SEO projects</p>
+            <h1 className="text-2xl font-semibold">Projects</h1>
+            <p className="text-sm text-muted-foreground">Manage your SEO projects</p>
           </div>
-          <Button onClick={() => setIsAddProjectOpen(true)}>
+          <Button onClick={() => setIsAddProjectOpen(true)} className="bg-gradient-to-r from-primary to-blue-600 hover:opacity-90">
             <PlusCircle className="mr-2 h-4 w-4" /> Add Project
           </Button>
         </div>
