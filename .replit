@@ -16,6 +16,11 @@ externalPort = 80
 
 [env]
 DATABASE_URL = "postgres://postgres:postgres@localhost:5432/postgres"
+PGUSER = "postgres"
+PGPASSWORD = "postgres"
+PGHOST = "localhost"
+PGPORT = "5432"
+PGDATABASE = "postgres"
 
 [workflows]
 runButton = "Project"
