@@ -15,12 +15,7 @@ localPort = 5000
 externalPort = 80
 
 [env]
-DATABASE_URL = "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable"
-PGUSER = "postgres"
-PGPASSWORD = "postgres"
-PGHOST = "localhost"
-PGPORT = "5432"
-PGDATABASE = "postgres"
+DATABASE_URL = "postgresql://neondb_owner:npg_h5rcF3NdEmJI@ep-proud-block-a4lx4e07-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 
 [workflows]
 runButton = "Project"
